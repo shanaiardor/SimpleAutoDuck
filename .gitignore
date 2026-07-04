@@ -4,3 +4,6 @@ obj/
 .vs/
 packages/
 *.suo
+
+# Inno Setup 安装包输出
+installer/Output/
