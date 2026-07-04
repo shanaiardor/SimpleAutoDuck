@@ -245,6 +245,10 @@ namespace SimpleAutoDuck.UI
             // MainForm
             this.AutoScaleMode = AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(720, 420);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(720, 420);
+            this.MaximumSize = new System.Drawing.Size(720, 420);
             this.Controls.Add(this.grpSessions);
             this.Controls.Add(this.grpStatus);
             this.Controls.Add(this.grpParams);
