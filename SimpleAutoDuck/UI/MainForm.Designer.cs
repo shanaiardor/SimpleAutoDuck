@@ -107,16 +107,16 @@ namespace SimpleAutoDuck.UI
 
             // grpStatus
             this.grpStatus.Location = new System.Drawing.Point(308, 12);
-            this.grpStatus.Size = new System.Drawing.Size(400, 70);
+            this.grpStatus.Size = new System.Drawing.Size(470, 70);
             this.grpStatus.Text = "状态";
             this.grpStatus.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular);
 
             this.lblState.Location = new System.Drawing.Point(12, 20);
-            this.lblState.Size = new System.Drawing.Size(370, 18);
+            this.lblState.Size = new System.Drawing.Size(440, 18);
             this.lblState.Text = "状态: 监测中";
 
             this.pbMainLevel.Location = new System.Drawing.Point(12, 40);
-            this.pbMainLevel.Size = new System.Drawing.Size(370, 18);
+            this.pbMainLevel.Size = new System.Drawing.Size(440, 18);
             this.pbMainLevel.Maximum = 1000;
 
             this.grpStatus.Controls.Add(this.lblState);
@@ -124,80 +124,80 @@ namespace SimpleAutoDuck.UI
 
             // grpParams
             this.grpParams.Location = new System.Drawing.Point(308, 92);
-            this.grpParams.Size = new System.Drawing.Size(400, 220);
+            this.grpParams.Size = new System.Drawing.Size(470, 220);
             this.grpParams.Text = "参数";
             this.grpParams.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular);
 
             // 阈值 (col 1, row 1)
             this.lblThreshold.Location = new System.Drawing.Point(12, 26);
-            this.lblThreshold.Size = new System.Drawing.Size(70, 20);
+            this.lblThreshold.Size = new System.Drawing.Size(60, 20);
             this.lblThreshold.Text = "阈值";
-            this.tbThreshold.Location = new System.Drawing.Point(80, 22);
+            this.tbThreshold.Location = new System.Drawing.Point(70, 22);
             this.tbThreshold.Size = new System.Drawing.Size(110, 30);
             this.tbThreshold.Minimum = 0; this.tbThreshold.Maximum = 100;
             this.tbThreshold.TickFrequency = 10;
             this.tbThreshold.Scroll += new System.EventHandler(this.tbThreshold_Scroll);
-            this.lblThresholdVal.Location = new System.Drawing.Point(192, 26);
-            this.lblThresholdVal.Size = new System.Drawing.Size(40, 20);
+            this.lblThresholdVal.Location = new System.Drawing.Point(182, 26);
+            this.lblThresholdVal.Size = new System.Drawing.Size(50, 20);
 
             // Duck深度 (col 2, row 1)
-            this.lblDuckDepth.Location = new System.Drawing.Point(210, 26);
-            this.lblDuckDepth.Size = new System.Drawing.Size(70, 20);
+            this.lblDuckDepth.Location = new System.Drawing.Point(240, 26);
+            this.lblDuckDepth.Size = new System.Drawing.Size(60, 20);
             this.lblDuckDepth.Text = "Duck深度";
-            this.tbDuckDepth.Location = new System.Drawing.Point(278, 22);
+            this.tbDuckDepth.Location = new System.Drawing.Point(300, 22);
             this.tbDuckDepth.Size = new System.Drawing.Size(110, 30);
             this.tbDuckDepth.Minimum = 0; this.tbDuckDepth.Maximum = 100;
             this.tbDuckDepth.TickFrequency = 10;
             this.tbDuckDepth.Scroll += new System.EventHandler(this.tbDuckDepth_Scroll);
-            this.lblDuckDepthVal.Location = new System.Drawing.Point(390, 26);
-            this.lblDuckDepthVal.Size = new System.Drawing.Size(40, 20);
+            this.lblDuckDepthVal.Location = new System.Drawing.Point(412, 26);
+            this.lblDuckDepthVal.Size = new System.Drawing.Size(50, 20);
 
             // Attack (col 1, row 2)
             this.lblAttack.Location = new System.Drawing.Point(12, 70);
-            this.lblAttack.Size = new System.Drawing.Size(70, 20);
+            this.lblAttack.Size = new System.Drawing.Size(60, 20);
             this.lblAttack.Text = "Attack";
-            this.tbAttack.Location = new System.Drawing.Point(80, 66);
+            this.tbAttack.Location = new System.Drawing.Point(70, 66);
             this.tbAttack.Size = new System.Drawing.Size(110, 30);
             this.tbAttack.Minimum = 1; this.tbAttack.Maximum = 2000;
             this.tbAttack.TickFrequency = 200;
             this.tbAttack.Scroll += new System.EventHandler(this.tbAttack_Scroll);
-            this.lblAttackVal.Location = new System.Drawing.Point(192, 70);
+            this.lblAttackVal.Location = new System.Drawing.Point(182, 70);
             this.lblAttackVal.Size = new System.Drawing.Size(55, 20);
 
             // Release (col 2, row 2)
-            this.lblRelease.Location = new System.Drawing.Point(210, 70);
-            this.lblRelease.Size = new System.Drawing.Size(70, 20);
+            this.lblRelease.Location = new System.Drawing.Point(240, 70);
+            this.lblRelease.Size = new System.Drawing.Size(60, 20);
             this.lblRelease.Text = "Release";
-            this.tbRelease.Location = new System.Drawing.Point(278, 66);
+            this.tbRelease.Location = new System.Drawing.Point(300, 66);
             this.tbRelease.Size = new System.Drawing.Size(110, 30);
             this.tbRelease.Minimum = 1; this.tbRelease.Maximum = 5000;
             this.tbRelease.TickFrequency = 500;
             this.tbRelease.Scroll += new System.EventHandler(this.tbRelease_Scroll);
-            this.lblReleaseVal.Location = new System.Drawing.Point(390, 70);
+            this.lblReleaseVal.Location = new System.Drawing.Point(412, 70);
             this.lblReleaseVal.Size = new System.Drawing.Size(55, 20);
 
             // Hold (col 1, row 3)
             this.lblHold.Location = new System.Drawing.Point(12, 114);
-            this.lblHold.Size = new System.Drawing.Size(70, 20);
+            this.lblHold.Size = new System.Drawing.Size(60, 20);
             this.lblHold.Text = "Hold";
-            this.tbHold.Location = new System.Drawing.Point(80, 110);
+            this.tbHold.Location = new System.Drawing.Point(70, 110);
             this.tbHold.Size = new System.Drawing.Size(110, 30);
             this.tbHold.Minimum = 0; this.tbHold.Maximum = 2000;
             this.tbHold.TickFrequency = 100;
             this.tbHold.Scroll += new System.EventHandler(this.tbHold_Scroll);
-            this.lblHoldVal.Location = new System.Drawing.Point(192, 114);
+            this.lblHoldVal.Location = new System.Drawing.Point(182, 114);
             this.lblHoldVal.Size = new System.Drawing.Size(55, 20);
 
             // 释放延迟 (col 2, row 3)
-            this.lblReleaseDelay.Location = new System.Drawing.Point(210, 114);
-            this.lblReleaseDelay.Size = new System.Drawing.Size(70, 20);
+            this.lblReleaseDelay.Location = new System.Drawing.Point(240, 114);
+            this.lblReleaseDelay.Size = new System.Drawing.Size(60, 20);
             this.lblReleaseDelay.Text = "释放延迟";
-            this.tbReleaseDelay.Location = new System.Drawing.Point(278, 110);
+            this.tbReleaseDelay.Location = new System.Drawing.Point(300, 110);
             this.tbReleaseDelay.Size = new System.Drawing.Size(110, 30);
             this.tbReleaseDelay.Minimum = 0; this.tbReleaseDelay.Maximum = 5000;
             this.tbReleaseDelay.TickFrequency = 500;
             this.tbReleaseDelay.Scroll += new System.EventHandler(this.tbReleaseDelay_Scroll);
-            this.lblReleaseDelayVal.Location = new System.Drawing.Point(390, 114);
+            this.lblReleaseDelayVal.Location = new System.Drawing.Point(412, 114);
             this.lblReleaseDelayVal.Size = new System.Drawing.Size(55, 20);
 
             this.grpParams.Controls.Add(this.lblThreshold); this.grpParams.Controls.Add(this.tbThreshold); this.grpParams.Controls.Add(this.lblThresholdVal);
@@ -209,7 +209,7 @@ namespace SimpleAutoDuck.UI
 
             // grpActions
             this.grpActions.Location = new System.Drawing.Point(308, 320);
-            this.grpActions.Size = new System.Drawing.Size(400, 82);
+            this.grpActions.Size = new System.Drawing.Size(470, 82);
             this.grpActions.Text = "操作";
             this.grpActions.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular);
 
@@ -244,11 +244,11 @@ namespace SimpleAutoDuck.UI
 
             // MainForm
             this.AutoScaleMode = AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 420);
+            this.ClientSize = new System.Drawing.Size(800, 420);
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(720, 420);
-            this.MaximumSize = new System.Drawing.Size(720, 420);
+            this.MinimumSize = new System.Drawing.Size(800, 420);
+            this.MaximumSize = new System.Drawing.Size(800, 420);
             this.Controls.Add(this.grpSessions);
             this.Controls.Add(this.grpStatus);
             this.Controls.Add(this.grpParams);
