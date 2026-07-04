@@ -30,12 +30,21 @@ namespace SimpleAutoDuck.Audio
 
         public void Refresh()
         {
-            Clear();
             _sessionManager.RefreshSessions();
+            var liveNames = new HashSet<string>();
             var sessions = _sessionManager.Sessions;
             for (int i = 0; i < sessions.Count; i++)
             {
-                AddSession(sessions[i]);
+                var envelope = AddSession(sessions[i]);
+                if (envelope != null) liveNames.Add(envelope.ProcessName);
+            }
+            var stale = new List<string>();
+            foreach (var name in _sessions.Keys)
+                if (!liveNames.Contains(name)) stale.Add(name);
+            foreach (var name in stale)
+            {
+                try { _sessions[name].Dispose(); } catch { }
+                _sessions.Remove(name);
             }
         }
 
@@ -50,9 +59,8 @@ namespace SimpleAutoDuck.Audio
             if (_sessions.ContainsKey(envelope.ProcessName))
             {
                 envelope.Dispose();
-                return null;
+                return _sessions[envelope.ProcessName];
             }
-            envelope.SetVolume(1.0);
             _sessions[envelope.ProcessName] = envelope;
             return envelope;
         }

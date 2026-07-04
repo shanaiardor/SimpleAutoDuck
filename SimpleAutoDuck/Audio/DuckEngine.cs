@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using SimpleAutoDuck.Config;
 
@@ -11,6 +12,7 @@ namespace SimpleAutoDuck.Audio
 
         public DuckingState State { get; private set; } = DuckingState.Monitoring;
         public IList<IDuckSession> Sessions { get; set; } = new List<IDuckSession>();
+        public event Action EnterDucking;
 
         public DuckEngine(DuckConfig cfg)
         {
@@ -29,7 +31,7 @@ namespace SimpleAutoDuck.Audio
                 {
                     _holdAccumMs += dtMs;
                     if (_holdAccumMs >= _cfg.HoldMs)
-                        EnterDucking();
+                        BeginDucking();
                 }
                 else
                 {
@@ -61,7 +63,7 @@ namespace SimpleAutoDuck.Audio
             return false;
         }
 
-        private void EnterDucking()
+        private void BeginDucking()
         {
             State = DuckingState.Ducking;
             _holdAccumMs = 0;
@@ -71,6 +73,7 @@ namespace SimpleAutoDuck.Audio
                 if (s.IsMainApp || s.IsExcluded) continue;
                 s.SnapshotUserVolume();
             }
+            EnterDucking?.Invoke();
         }
 
         private void ExitDucking()

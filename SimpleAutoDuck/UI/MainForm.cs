@@ -33,6 +33,7 @@ namespace SimpleAutoDuck.UI
             }
 
             _engine = new DuckEngine(_config);
+            _engine.EnterDucking += OnEngineEnterDucking;
             LinkSessionsToEngine();
 
             _tray = new TrayIcon();
@@ -71,6 +72,21 @@ namespace SimpleAutoDuck.UI
                 {
                     s.IsMainApp = _config.MainAppProcessNames.Contains(s.ProcessName);
                     s.IsExcluded = _config.BackgroundBlacklist.Contains(s.ProcessName);
+                    LinkSessionsToEngine();
+                    PopulateSessionList();
+                }));
+            }
+            catch { }
+        }
+
+        private void OnEngineEnterDucking()
+        {
+            if (IsDisposed) return;
+            try
+            {
+                BeginInvoke((Action)(() =>
+                {
+                    try { _sessionManager?.Refresh(); } catch { }
                     LinkSessionsToEngine();
                     PopulateSessionList();
                 }));
