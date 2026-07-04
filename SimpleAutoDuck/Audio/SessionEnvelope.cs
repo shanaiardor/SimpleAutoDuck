@@ -20,6 +20,7 @@ namespace SimpleAutoDuck.Audio
             {
                 ProcessName = TryGetProcessName();
                 _currentVolume = GetVolume();
+                _userVolumeSnapshot = _currentVolume;
             }
             catch
             {
@@ -66,8 +67,19 @@ namespace SimpleAutoDuck.Audio
 
         public void SnapshotUserVolume()
         {
-            try { _userVolumeSnapshot = _session.SimpleAudioVolume.Volume; }
+            try
+            {
+                float live = _session.SimpleAudioVolume.Volume;
+                _userVolumeSnapshot = ComputeUserSnapshot(live, _currentVolume, _userVolumeSnapshot);
+            }
             catch { _userVolumeSnapshot = 1.0; }
+        }
+
+        internal static double ComputeUserSnapshot(double liveVolume, double engineKnownVolume, double currentSnapshot)
+        {
+            if (Math.Abs(liveVolume - engineKnownVolume) > 0.01)
+                return liveVolume;
+            return currentSnapshot;
         }
 
         public double GetUserVolume() => _userVolumeSnapshot;

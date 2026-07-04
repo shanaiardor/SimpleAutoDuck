@@ -1,5 +1,5 @@
 #define MyAppName "SimpleAutoDuck"
-#define MyAppVersion "1.0.0.0"
+#define MyAppVersion "0.0.2.0"
 #define MyAppPublisher "SimpleAutoDuck"
 #define MyAppExeName "SimpleAutoDuck.exe"
 #define MyAppBuildDir "SimpleAutoDuck\bin\Release"

@@ -9,6 +9,8 @@ namespace SimpleAutoDuck.Audio
         private readonly DuckConfig _cfg;
         private int _holdAccumMs;
         private int _releaseAccumMs;
+        private readonly Dictionary<string, (double start, int elapsed)> _ramp =
+            new Dictionary<string, (double, int)>();
 
         public DuckingState State { get; private set; } = DuckingState.Monitoring;
         public IList<IDuckSession> Sessions { get; set; } = new List<IDuckSession>();
@@ -72,6 +74,7 @@ namespace SimpleAutoDuck.Audio
             {
                 if (s.IsMainApp || s.IsExcluded) continue;
                 s.SnapshotUserVolume();
+                _ramp[s.ProcessName] = (s.GetVolume(), 0);
             }
             EnterDucking?.Invoke();
         }
@@ -81,6 +84,11 @@ namespace SimpleAutoDuck.Audio
             State = DuckingState.Monitoring;
             _releaseAccumMs = 0;
             _holdAccumMs = 0;
+            foreach (var s in Sessions)
+            {
+                if (s.IsMainApp || s.IsExcluded) continue;
+                _ramp[s.ProcessName] = (s.GetVolume(), 0);
+            }
         }
 
         private void ApplyRampForState(int dtMs)
@@ -94,14 +102,21 @@ namespace SimpleAutoDuck.Audio
                 if (dur <= 0)
                 {
                     s.SetVolume(tgt);
-                    continue;
                 }
-                double ratio = (double)dtMs / dur;
-                double current = s.GetVolume();
-                double next = current + (tgt - current) * ratio;
-                if ((tgt > current && next > tgt) || (tgt < current && next < tgt))
-                    next = tgt;
-                s.SetVolume(next);
+                else
+                {
+                    string key = s.ProcessName;
+                    if (!_ramp.TryGetValue(key, out var info))
+                        info = (s.GetVolume(), 0);
+                    info.elapsed += dtMs;
+                    double t = (double)info.elapsed / dur;
+                    if (t >= 1.0) t = 1.0;
+                    double next = info.start + (tgt - info.start) * t;
+                    s.SetVolume(next);
+                    _ramp[key] = info;
+                }
+                if (State == DuckingState.Monitoring)
+                    s.SnapshotUserVolume();
             }
         }
     }

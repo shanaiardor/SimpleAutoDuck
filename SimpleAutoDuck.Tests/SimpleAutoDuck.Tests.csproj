@@ -34,6 +34,8 @@
     <Compile Include="RampTests.cs" />
     <Compile Include="DuckEngineTests.cs" />
     <Compile Include="HotkeyDefinitionTests.cs" />
+    <Compile Include="SessionEnvelopeSnapshotTests.cs" />
+    <Compile Include="RapidToggleTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="xunit" Version="2.9.3" />
