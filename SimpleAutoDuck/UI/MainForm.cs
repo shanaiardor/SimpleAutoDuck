@@ -47,8 +47,34 @@ namespace SimpleAutoDuck.UI
             RegisterHotkey();
 
             BindConfigToControls();
+            PopulatePresets();
             PopulateSessionList();
             tickTimer.Start();
+        }
+
+        private void PopulatePresets()
+        {
+            cbPreset.Items.Clear();
+            foreach (var p in Presets.All)
+                cbPreset.Items.Add(p.Name);
+            int idx = FindPresetIndexMatching(_config);
+            cbPreset.SelectedIndex = idx < 0 ? 0 : idx;
+        }
+
+        private int FindPresetIndexMatching(DuckConfig cfg)
+        {
+            for (int i = 0; i < Presets.All.Length; i++)
+            {
+                var p = Presets.All[i];
+                if (Math.Abs(p.Threshold - cfg.Threshold) < 0.0001 &&
+                    Math.Abs(p.DuckDepth - cfg.DuckDepth) < 0.0001 &&
+                    p.AttackMs == cfg.AttackMs &&
+                    p.ReleaseMs == cfg.ReleaseMs &&
+                    p.HoldMs == cfg.HoldMs &&
+                    p.ReleaseDelayMs == cfg.ReleaseDelayMs)
+                    return i;
+            }
+            return -1;
         }
 
         private void LinkSessionsToEngine()
@@ -167,6 +193,14 @@ namespace SimpleAutoDuck.UI
             _config.Clamp();
             _config.Save();
             MessageBox.Show("配置已保存", "SimpleAutoDuck", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void cbPreset_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int idx = cbPreset.SelectedIndex;
+            if (idx < 0 || idx >= Presets.All.Length) return;
+            Presets.ApplyTo(_config, Presets.All[idx]);
+            BindConfigToControls();
         }
 
         private void tickTimer_Tick(object sender, EventArgs e)

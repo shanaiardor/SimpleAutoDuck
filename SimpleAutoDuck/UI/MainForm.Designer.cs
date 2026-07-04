@@ -36,6 +36,8 @@ namespace SimpleAutoDuck.UI
         private Label lblReleaseDelay;
         private CheckBox chkEnabled;
         private Button btnSave;
+        private Label lblPreset;
+        private ComboBox cbPreset;
         private System.Windows.Forms.Timer tickTimer;
 
         private void InitializeComponent()
@@ -65,6 +67,8 @@ namespace SimpleAutoDuck.UI
             this.lblReleaseDelay = new Label();
             this.chkEnabled = new CheckBox();
             this.btnSave = new Button();
+            this.lblPreset = new Label();
+            this.cbPreset = new ComboBox();
             this.tickTimer = new System.Windows.Forms.Timer(this.components);
 
             this.clbSessions.FormattingEnabled = true;
@@ -163,6 +167,15 @@ namespace SimpleAutoDuck.UI
             this.btnSave.Text = "保存配置";
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
 
+            this.lblPreset.Location = new System.Drawing.Point(140, 290);
+            this.lblPreset.Size = new System.Drawing.Size(45, 20);
+            this.lblPreset.Text = "预设";
+
+            this.cbPreset.Location = new System.Drawing.Point(185, 287);
+            this.cbPreset.Size = new System.Drawing.Size(160, 21);
+            this.cbPreset.DropDownStyle = ComboBoxStyle.DropDownList;
+            this.cbPreset.SelectedIndexChanged += new System.EventHandler(this.cbPreset_SelectedIndexChanged);
+
             this.tickTimer.Interval = 50;
             this.tickTimer.Tick += new System.EventHandler(this.tickTimer_Tick);
 
@@ -180,6 +193,8 @@ namespace SimpleAutoDuck.UI
             this.Controls.Add(this.lblReleaseDelay); this.Controls.Add(this.tbReleaseDelay); this.Controls.Add(this.lblReleaseDelayVal);
             this.Controls.Add(this.chkEnabled);
             this.Controls.Add(this.btnSave);
+            this.Controls.Add(this.lblPreset);
+            this.Controls.Add(this.cbPreset);
             this.Name = "MainForm";
             this.Text = "SimpleAutoDuck";
             this.FormClosing += new FormClosingEventHandler(this.MainForm_FormClosing);
