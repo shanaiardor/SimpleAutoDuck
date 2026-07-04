@@ -39,9 +39,11 @@ SimpleAutoDuck 是一个轻量级的 Windows 桌面工具，基于 NAudio 监听
 
 ### 方式一：使用安装包（推荐普通用户）
 
-1. 前往 [Releases](../../releases) 下载最新 `SimpleAutoDuckSetup-x.x.x.x.exe`。
+1. 直接下载安装包：[**SimpleAutoDuckSetup-1.0.0.0.exe**](installer/Output/SimpleAutoDuckSetup-1.0.0.0.exe)（约 2.2 MB）
 2. 双击运行安装程序，按向导完成安装。
 3. 安装后从开始菜单启动 `SimpleAutoDuck`，或勾选"开机启动"。
+
+> 也可前往 [Releases](../../releases) 页面下载历史版本。
 
 ### 方式二：从源码构建
 
