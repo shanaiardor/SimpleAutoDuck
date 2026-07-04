@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37328.6 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleAutoDuck", "SimpleAutoDuck\SimpleAutoDuck.csproj", "{827C525E-2830-4898-B630-2E62E75070DA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{827C525E-2830-4898-B630-2E62E75070DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827C525E-2830-4898-B630-2E62E75070DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827C525E-2830-4898-B630-2E62E75070DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827C525E-2830-4898-B630-2E62E75070DA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E53F2C70-8F52-4904-9D62-D0264C6D2ED4}
+	EndGlobalSection
+EndGlobal
