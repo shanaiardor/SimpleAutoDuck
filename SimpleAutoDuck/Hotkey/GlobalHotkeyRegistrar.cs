@@ -28,7 +28,6 @@ namespace SimpleAutoDuck.Hotkey
         {
             var cp = new CreateParams();
             cp.Caption = "SimpleAutoDuckHotkeyHelper";
-            cp.ClassName = "Static";
             CreateHandle(cp);
         }
 
