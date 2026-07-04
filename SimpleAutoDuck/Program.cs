@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using SimpleAutoDuck.UI;
 
 namespace SimpleAutoDuck
 {
@@ -10,7 +11,7 @@ namespace SimpleAutoDuck
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form());
+            Application.Run(new MainForm());
         }
     }
 }
