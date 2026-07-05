@@ -261,9 +261,3 @@ SimpleAutoDuck/
 
 依赖项：
 - [NAudio](https://github.com/naudio/NAudio) — MIT License
-- .NET Framework 4.7.2 — Microsoft EULA
-
-## 致谢 / Acknowledgements
-
-- [NAudio](https://github.com/naudio/NAudio) —— .NET 下最好的 Windows 音频库
-- [Inno Setup](https://jrsoftware.org/isinfo.php) —— 强大且免费的 Windows 安装包制作工具
