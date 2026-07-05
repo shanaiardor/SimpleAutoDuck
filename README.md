@@ -39,7 +39,7 @@ SimpleAutoDuck 是一个轻量级的 Windows 桌面工具，基于 NAudio 监听
 
 ### 方式一：使用安装包（推荐普通用户）
 
-1. 直接下载安装包：[**SimpleAutoDuckSetup-0.0.2.0.exe**](installer/Output)（约 2.2 MB）
+1. 直接下载安装包：[**SimpleAutoDuckSetup-0.0.3.0.exe**](installer/Output)（约 2.2 MB）
 2. 双击运行安装程序，按向导完成安装。
 3. 安装后从开始菜单启动 `SimpleAutoDuck`，或勾选"开机启动"。
 
@@ -154,7 +154,7 @@ SimpleAutoDuck 是一个轻量级的 Windows 桌面工具，基于 NAudio 监听
 .\scripts\Package-Release.ps1 -InnoPath "C:\Users\<你>\AppData\Local\Programs\Inno Setup 6"
 ```
 
-安装包输出到 `installer\Output\SimpleAutoDuckSetup-1.0.0.0.exe`。
+安装包输出到 `installer\Output\SimpleAutoDuckSetup-0.0.3.0.exe`。
 
 脚本会把 `0.0.2.0` 这类四段版本号递增为下一个补丁版本，例如 `0.0.3.0`，并同步更新 `AssemblyInfo.cs`、`installer.iss` 和 README 中的安装包文件名。新生成的 `installer\Output\SimpleAutoDuckSetup-版本.exe` 会随 release commit 一起提交并推送到 GitHub。默认要求工作区干净；如需在已有未提交改动上强制执行，可加 `-AllowDirty`。
 
