@@ -147,11 +147,16 @@ SimpleAutoDuck 是一个轻量级的 Windows 桌面工具，基于 NAudio 监听
 ### 生成安装包
 
 ```powershell
-# 需先安装 Inno Setup 6
-& "C:\Users\<你>\AppData\Local\Programs\Inno Setup 6\ISCC.exe" installer.iss
+# 自动版本 +1、Release 构建、Inno 打包、提交并推送当前分支和 tag
+.\scripts\Package-Release.ps1
+
+# 如果 Inno Setup 安装在非默认目录，可显式指定
+.\scripts\Package-Release.ps1 -InnoPath "C:\Users\<你>\AppData\Local\Programs\Inno Setup 6"
 ```
 
 安装包输出到 `installer\Output\SimpleAutoDuckSetup-1.0.0.0.exe`。
+
+脚本会把 `0.0.2.0` 这类四段版本号递增为下一个补丁版本，例如 `0.0.3.0`，并同步更新 `AssemblyInfo.cs`、`installer.iss` 和 README 中的安装包文件名。新生成的 `installer\Output\SimpleAutoDuckSetup-版本.exe` 会随 release commit 一起提交并推送到 GitHub。默认要求工作区干净；如需在已有未提交改动上强制执行，可加 `-AllowDirty`。
 
 ## 测试 / Tests
 

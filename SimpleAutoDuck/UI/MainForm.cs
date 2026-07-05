@@ -1,4 +1,5 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 using SimpleAutoDuck.Audio;
@@ -14,6 +15,7 @@ namespace SimpleAutoDuck.UI
         private readonly DuckEngine _engine;
         private readonly TrayIcon _tray;
         private readonly GlobalHotkeyRegistrar _hotkey;
+        private bool _populatingSessions;
 
         public MainForm()
         {
@@ -146,12 +148,60 @@ namespace SimpleAutoDuck.UI
         private void PopulateSessionList()
         {
             if (_sessionManager == null) return;
-            clbSessions.Items.Clear();
-            foreach (var s in _sessionManager.Sessions)
+            _populatingSessions = true;
+            try
             {
-                int idx = clbSessions.Items.Add(s.ProcessName);
-                clbSessions.SetItemChecked(idx, _config.MainAppProcessNames.Contains(s.ProcessName));
+                lvSessions.BeginUpdate();
+                lvSessions.Items.Clear();
+                sessionImageList.Images.Clear();
+
+                foreach (var s in _sessionManager.Sessions)
+                {
+                    string imageKey = AddSessionIcon(s);
+                    var item = new ListViewItem(s.ProcessName)
+                    {
+                        Checked = _config.MainAppProcessNames.Contains(s.ProcessName),
+                        ImageKey = imageKey,
+                        Tag = s.ProcessName
+                    };
+                    lvSessions.Items.Add(item);
+                }
             }
+            finally
+            {
+                lvSessions.EndUpdate();
+                _populatingSessions = false;
+            }
+        }
+
+        private string AddSessionIcon(SessionEnvelope session)
+        {
+            string key = string.IsNullOrEmpty(session.ExecutablePath)
+                ? session.ProcessName
+                : session.ExecutablePath;
+
+            if (sessionImageList.Images.ContainsKey(key))
+                return key;
+
+            if (!string.IsNullOrEmpty(session.ExecutablePath))
+            {
+                try
+                {
+                    Icon icon = Icon.ExtractAssociatedIcon(session.ExecutablePath);
+                    if (icon != null)
+                    {
+                        sessionImageList.Images.Add(key, icon.ToBitmap());
+                        icon.Dispose();
+                        return key;
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            sessionImageList.Images.Add(key, SystemIcons.Application.ToBitmap());
+            return key;
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)
@@ -160,11 +210,13 @@ namespace SimpleAutoDuck.UI
             catch (Exception ex) { MessageBox.Show("刷新失败: " + ex.Message); }
         }
 
-        private void clbSessions_ItemCheck(object sender, ItemCheckEventArgs e)
+        private void lvSessions_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
-            if (e.Index < 0 || e.Index >= clbSessions.Items.Count) return;
-            string proc = (string)clbSessions.Items[e.Index];
-            if (e.NewValue == CheckState.Checked)
+            if (_populatingSessions) return;
+            string proc = e.Item.Tag as string;
+            if (string.IsNullOrEmpty(proc)) return;
+
+            if (e.Item.Checked)
             {
                 if (!_config.MainAppProcessNames.Contains(proc)) _config.MainAppProcessNames.Add(proc);
             }

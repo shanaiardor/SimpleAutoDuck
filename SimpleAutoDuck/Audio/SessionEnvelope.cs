@@ -1,4 +1,6 @@
 using System;
+using System.Runtime.InteropServices;
+using System.Text;
 using NAudio.CoreAudioApi;
 
 namespace SimpleAutoDuck.Audio
@@ -8,8 +10,11 @@ namespace SimpleAutoDuck.Audio
         private readonly AudioSessionControl _session;
         private double _userVolumeSnapshot = 1.0;
         private double _currentVolume = 1.0;
+        private const int ProcessQueryLimitedInformation = 0x1000;
 
         public string ProcessName { get; }
+        public int ProcessId { get; }
+        public string ExecutablePath { get; }
         public bool IsMainApp { get; set; }
         public bool IsExcluded { get; set; }
 
@@ -18,22 +23,25 @@ namespace SimpleAutoDuck.Audio
             _session = session;
             try
             {
-                ProcessName = TryGetProcessName();
+                ProcessId = (int)_session.GetProcessID;
+                ProcessName = TryGetProcessName(ProcessId);
+                ExecutablePath = TryGetExecutablePath(ProcessId);
                 _currentVolume = GetVolume();
                 _userVolumeSnapshot = _currentVolume;
             }
             catch
             {
                 ProcessName = "<unknown>.exe";
+                ProcessId = 0;
+                ExecutablePath = null;
             }
         }
 
-        private string TryGetProcessName()
+        private string TryGetProcessName(int processId)
         {
             try
             {
-                int pid = (int)_session.GetProcessID;
-                using (var proc = System.Diagnostics.Process.GetProcessById(pid))
+                using (var proc = System.Diagnostics.Process.GetProcessById(processId))
                     return proc.ProcessName + ".exe";
             }
             catch
@@ -41,6 +49,58 @@ namespace SimpleAutoDuck.Audio
                 return "<unknown>.exe";
             }
         }
+
+        private string TryGetExecutablePath(int processId)
+        {
+            string path = TryQueryProcessImageName(processId);
+            if (!string.IsNullOrEmpty(path))
+                return path;
+
+            try
+            {
+                using (var proc = System.Diagnostics.Process.GetProcessById(processId))
+                    return proc.MainModule.FileName;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        private string TryQueryProcessImageName(int processId)
+        {
+            IntPtr handle = IntPtr.Zero;
+            try
+            {
+                handle = OpenProcess(ProcessQueryLimitedInformation, false, processId);
+                if (handle == IntPtr.Zero)
+                    return null;
+
+                var buffer = new StringBuilder(1024);
+                int size = buffer.Capacity;
+                return QueryFullProcessImageName(handle, 0, buffer, ref size)
+                    ? buffer.ToString()
+                    : null;
+            }
+            catch
+            {
+                return null;
+            }
+            finally
+            {
+                if (handle != IntPtr.Zero)
+                    CloseHandle(handle);
+            }
+        }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern IntPtr OpenProcess(int desiredAccess, bool inheritHandle, int processId);
+
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+        private static extern bool QueryFullProcessImageName(IntPtr process, int flags, StringBuilder exeName, ref int size);
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        private static extern bool CloseHandle(IntPtr handle);
 
         public double GetPeakLevel()
         {

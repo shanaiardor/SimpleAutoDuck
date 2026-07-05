@@ -13,7 +13,8 @@ namespace SimpleAutoDuck.UI
         }
 
         private GroupBox grpSessions;
-        private CheckedListBox clbSessions;
+        private ListView lvSessions;
+        private ImageList sessionImageList;
         private Button btnRefresh;
 
         private GroupBox grpStatus;
@@ -52,7 +53,8 @@ namespace SimpleAutoDuck.UI
         {
             this.components = new System.ComponentModel.Container();
             this.grpSessions = new GroupBox();
-            this.clbSessions = new CheckedListBox();
+            this.lvSessions = new ListView();
+            this.sessionImageList = new ImageList(this.components);
             this.btnRefresh = new Button();
             this.grpStatus = new GroupBox();
             this.lblState = new Label();
@@ -95,15 +97,25 @@ namespace SimpleAutoDuck.UI
             this.btnRefresh.UseVisualStyleBackColor = true;
             this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
 
-            this.clbSessions.FormattingEnabled = true;
-            this.clbSessions.Location = new System.Drawing.Point(10, 54);
-            this.clbSessions.Name = "clbSessions";
-            this.clbSessions.Size = new System.Drawing.Size(258, 328);
-            this.clbSessions.CheckOnClick = true;
-            this.clbSessions.ItemCheck += new ItemCheckEventHandler(this.clbSessions_ItemCheck);
+            this.sessionImageList.ColorDepth = ColorDepth.Depth32Bit;
+            this.sessionImageList.ImageSize = new System.Drawing.Size(16, 16);
+
+            this.lvSessions.CheckBoxes = true;
+            this.lvSessions.FullRowSelect = true;
+            this.lvSessions.HeaderStyle = ColumnHeaderStyle.None;
+            this.lvSessions.HideSelection = false;
+            this.lvSessions.Location = new System.Drawing.Point(10, 54);
+            this.lvSessions.MultiSelect = false;
+            this.lvSessions.Name = "lvSessions";
+            this.lvSessions.SmallImageList = this.sessionImageList;
+            this.lvSessions.Size = new System.Drawing.Size(258, 328);
+            this.lvSessions.UseCompatibleStateImageBehavior = false;
+            this.lvSessions.View = View.Details;
+            this.lvSessions.Columns.Add("", 238);
+            this.lvSessions.ItemChecked += new ItemCheckedEventHandler(this.lvSessions_ItemChecked);
 
             this.grpSessions.Controls.Add(this.btnRefresh);
-            this.grpSessions.Controls.Add(this.clbSessions);
+            this.grpSessions.Controls.Add(this.lvSessions);
 
             // grpStatus
             this.grpStatus.Location = new System.Drawing.Point(308, 12);
